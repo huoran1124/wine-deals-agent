@@ -14,11 +14,7 @@ RUN npm install
 # Install client dependencies
 RUN cd client && npm install
 
-# Copy client source files (including public directory)
-COPY client/src ./client/src
-COPY client/public ./client/public
-
-# Copy the rest of the application
+# Copy the rest of the application (including client/public and client/src)
 COPY . .
 
 # Set environment variables
