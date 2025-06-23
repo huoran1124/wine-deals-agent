@@ -203,8 +203,10 @@ const Dashboard = () => {
                     <td>
                       <strong>{deal.wineName}</strong>
                       {deal.wineDetails?.vintage && (
-                        <br />
-                        <small style={{ color: '#666' }}>{deal.wineDetails.vintage}</small>
+                        <>
+                          <br />
+                          <small style={{ color: '#666' }}>{deal.wineDetails.vintage}</small>
+                        </>
                       )}
                     </td>
                     <td>${deal.originalPrice?.toFixed(2)}</td>

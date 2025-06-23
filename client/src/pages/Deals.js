@@ -319,17 +319,21 @@ const Deals = () => {
                     return (
                       <tr key={deal._id}>
                         <td>
-                          <div>
+                          <span>
                             <strong>{deal.wineName}</strong>
                             {deal.wineDetails?.vintage && (
-                              <br />
-                              <small style={{ color: '#666' }}>{deal.wineDetails.vintage}</small>
+                              <React.Fragment>
+                                <br />
+                                <small style={{ color: '#666' }}>{deal.wineDetails.vintage}</small>
+                              </React.Fragment>
                             )}
                             {deal.wineDetails?.varietal && (
-                              <br />
-                              <small style={{ color: '#666' }}>{deal.wineDetails.varietal}</small>
+                              <React.Fragment>
+                                <br />
+                                <small style={{ color: '#666' }}>{deal.wineDetails.varietal}</small>
+                              </React.Fragment>
                             )}
-                          </div>
+                          </span>
                         </td>
                         <td>
                           <span style={{ textDecoration: deal.discountedPrice ? 'line-through' : 'none' }}>
@@ -343,10 +347,12 @@ const Deals = () => {
                                 {formatPrice(deal.discountedPrice)}
                               </span>
                               {discount && (
-                                <br />
-                                <span className="badge badge-success">
-                                  {discount}% off
-                                </span>
+                                <>
+                                  <br />
+                                  <span className="badge badge-success">
+                                    {discount}% off
+                                  </span>
+                                </>
                               )}
                             </div>
                           ) : (

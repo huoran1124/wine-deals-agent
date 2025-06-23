@@ -1,21 +1,27 @@
-# Use Node.js 18
+# Use Node.js 18 Alpine for smaller image size
 FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
 COPY client/package*.json ./client/
 
-# Install dependencies
+# Install server dependencies
 RUN npm install
+
+# Install client dependencies
 RUN cd client && npm install
 
-# Copy source code
+# Copy the rest of the application
 COPY . .
 
-# Build the React app
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=5000
+
+# Build the client
 RUN cd client && npm run build
 
 # Expose port
