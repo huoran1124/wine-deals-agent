@@ -33,7 +33,7 @@ const WinePreferences = () => {
   const fetchWinePreferences = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/wines/preferences');
+      const response = await axios.get('/api/wines/preferences');
       setWines(response.data.winePreferences);
     } catch (error) {
       console.error('Error fetching wine preferences:', error);
@@ -83,10 +83,10 @@ const WinePreferences = () => {
 
     try {
       if (editingWine) {
-        await axios.put(`/wines/preferences/${editingWine._id}`, formData);
+        await axios.put(`/api/wines/preferences/${editingWine._id}`, formData);
         toast.success('Wine updated successfully!');
       } else {
-        await axios.post('/wines/preferences', formData);
+        await axios.post('/api/wines/preferences', formData);
         toast.success('Wine added successfully!');
       }
       
@@ -119,7 +119,7 @@ const WinePreferences = () => {
     }
 
     try {
-      await axios.delete(`/wines/preferences/${wineId}`);
+      await axios.delete(`/api/wines/preferences/${wineId}`);
       toast.success('Wine removed successfully!');
       fetchWinePreferences();
     } catch (error) {
@@ -136,7 +136,7 @@ const WinePreferences = () => {
 
     try {
       setSearching(true);
-      const response = await axios.get(`/wines/search?query=${encodeURIComponent(query)}`);
+      const response = await axios.get(`/api/wines/search?query=${encodeURIComponent(query)}`);
       setSearchResults(response.data.wines || []);
     } catch (error) {
       console.error('Error searching wines:', error);
