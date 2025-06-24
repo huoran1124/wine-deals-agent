@@ -38,9 +38,15 @@ app.use(express.urlencoded({ extended: true }));
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/wine-deals', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  connectTimeoutMS: 10000,
 })
 .then(() => console.log('MongoDB connected successfully'))
-.catch(err => console.error('MongoDB connection error:', err));
+.catch(err => {
+  console.error('MongoDB connection error:', err);
+  console.error('MongoDB URI:', process.env.MONGODB_URI ? 'URI is set' : 'URI is not set');
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
