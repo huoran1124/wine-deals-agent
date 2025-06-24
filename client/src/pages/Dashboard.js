@@ -32,17 +32,17 @@ const Dashboard = () => {
       setLoading(true);
       
       // Fetch user's wine preferences
-      const preferencesResponse = await axios.get('/wines/preferences');
-      const winePreferences = preferencesResponse.data.winePreferences;
+      const preferencesResponse = await axios.get('/api/wines/preferences');
+      const winePreferences = preferencesResponse.data.winePreferences || [];
       
       // Fetch personalized deals
-      const dealsResponse = await axios.get('/deals/user');
-      const personalizedDeals = dealsResponse.data.personalizedDeals;
+      const dealsResponse = await axios.get('/api/deals/user');
+      const personalizedDeals = dealsResponse.data.personalizedDeals || [];
       
       // Calculate stats
-      const totalDeals = personalizedDeals.reduce((sum, wineGroup) => sum + wineGroup.deals.length, 0);
+      const totalDeals = personalizedDeals.reduce((sum, wineGroup) => sum + (wineGroup.deals?.length || 0), 0);
       const recentDeals = personalizedDeals
-        .flatMap(wineGroup => wineGroup.deals)
+        .flatMap(wineGroup => wineGroup.deals || [])
         .sort((a, b) => new Date(b.scrapedAt) - new Date(a.scrapedAt))
         .slice(0, 5);
 
@@ -53,7 +53,12 @@ const Dashboard = () => {
       });
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
-      toast.error('Failed to load dashboard data');
+      // Set empty stats instead of showing error
+      setStats({
+        totalWines: 0,
+        totalDeals: 0,
+        recentDeals: []
+      });
     } finally {
       setLoading(false);
     }
